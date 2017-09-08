@@ -1,4 +1,4 @@
-package is.hi.byrjun;
+package is.nord;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

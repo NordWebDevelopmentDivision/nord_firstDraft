@@ -1,4 +1,4 @@
-package is.hi.byrjun.controller;
+package is.nord.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
