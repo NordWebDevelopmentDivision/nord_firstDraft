@@ -20,9 +20,8 @@
     <link rel="stylesheet" href="css/normalize.css">
 </head>
 <body>
-    <h1>${titill}</h1>
-    <p>${meginmal}</p>
     <a href="makeNews">Búa til frétt</a>
+    ${news}
 
 </body>
 

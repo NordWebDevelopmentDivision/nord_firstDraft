@@ -1,5 +1,8 @@
 package is.nord.controller;
 
+import is.nord.model.News;
+import is.nord.repository.NewsRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -7,36 +10,61 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-/** Höfundar:
+import java.util.ArrayList;
+
+/** Authors:
  *      Kári Snær Kárason (ksk12@hi.is),
  *      Ólafur Georg Gylfason (ogg4@hi.is),
  *      Stella Rut Guðmundsdóttir (srg30@hi.is)
- * Ath. skrifað eftir fyrirlestri hjá Ebbu Þóru 31. ágúst 2017.
  */
 
 /**
- * Byrjunarcontroller sem stýrir hvað er gert þegar notandi eða viðmót
- * setur inn skipun.
+ * A controller that handles the news feed
  */
 
 @Controller
-@RequestMapping("/") // Request Mapping er gerð fyrir klasann til að slóðin byrji á /news fyrir allar skipanir
+@RequestMapping("/")
 public class NewsController {
 
-    @RequestMapping("/")
-    public String showNews () {
+    // Connection with the news repository
+    @Autowired
+    NewsRepository newsRepository;
+
+    /**
+     * Displays the list of all news, with the latest one at the top
+     * @param model model of the view
+     * @return a website displaying news
+     */
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String showNews (Model model) {
+        ArrayList<News> newsList;
+        newsList = (ArrayList<News>) newsRepository.getAll();
+        model.addAttribute("news", newsList);
         return "news/index";
     }
 
+    /**
+     * Displays empty form for a news item
+     * @return a website with empty form for a news item
+     */
     @RequestMapping("/makeNews")
     public String makeNews () { return "news/makeNews";}
 
+    /**
+     * Receives a news item and adds it to the news repository
+     * @param title the title of the news item
+     * @param text  the text of the news item
+     * @param tag   the tag of the news item
+     * @param model a model with attributes
+     * @return a website with an empty form for a news item to be filled
+     */
     @RequestMapping(value="/addNews", method= RequestMethod.POST)
-    public String addNews (@RequestParam(value="titill", required=false) String titill,
-                           @RequestParam(value="meginmal", required=false) String meginmal,
+    public String addNews (@RequestParam(value="title", required=false) String title,
+                           @RequestParam(value="text", required=false) String text,
+                           @RequestParam(value="tag", required=false) String tag,
                            ModelMap model) {
-        model.addAttribute("titill", titill);
-        model.addAttribute("meginmal", meginmal);
-        return "news/index";
+        News news = new News(title, text, tag);
+        newsRepository.add(news);
+        return "news/makeNews";
     }
 }
