@@ -7,11 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class NewsRepositoryImp implements NewsRepository{
+public class NewsRepositoryImpl implements NewsRepository{
 
     private final List<News> newsRepo;
 
-    public NewsRepositoryImp() {
+    public NewsRepositoryImpl() {
         this.newsRepo = new ArrayList<News>();
     }
 

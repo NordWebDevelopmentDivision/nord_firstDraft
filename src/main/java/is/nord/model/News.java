@@ -8,6 +8,8 @@ public class News {
     private String text;
     private String tag;
 
+    public News() {}
+
     public News(String title, String text, String tag) {
         this.title = title;
         this.text = text;

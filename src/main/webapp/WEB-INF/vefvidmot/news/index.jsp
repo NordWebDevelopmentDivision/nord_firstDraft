@@ -21,6 +21,7 @@
 </head>
 <body>
     <a href="makeNews">Búa til frétt</a>
+    <a href="makeEvent">Búa til viðburð</a>
     ${news}
 
 </body>

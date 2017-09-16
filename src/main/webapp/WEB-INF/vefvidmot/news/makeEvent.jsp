@@ -22,11 +22,26 @@
 <body>
     <h1>Búa til frétt</h1>
 
-    <form method="POST" action="/addNews">
+    <form method="POST" action="/addEvent">
         Titill <input name="title" type="text" placeholder="Titill"> </input>
 
         Meginmál <textarea class="text" cols="86" rows ="20" name="text"></textarea>
         Tag <input name="tag" type="text" placeholder="Tag"> </input>
+        Fyrirtæki <input name="company" type="text" placeholder="Fyrirtæki"> </input>
+        Staðsetning <input name="location" type="text" placeholder="Staðsetning"> </input>
+        Fjöldi <input name="capacity" type="text" placeholder="Fjöldi"> </input>
+
+        Tímasetning viðburðar<input name="timeOfEvent" type="text" placeholder="HH:MM"> </input>
+        <input name="dateOfEvent" type="text" placeholder="DD-MM-YYYY"> </input>
+
+        Skráning hefst<input name="regStartsTime" type="text" placeholder="HH:MM"> </input>
+        <input name="regStartsDate" type="text" placeholder="DD-MM-YYYY"> </input>
+
+        Skráning endar<input name="regEndsTime" type="text" placeholder="HH:MM"> </input>
+        <input name="regEndsDate" type="text" placeholder="DD-MM-YYYY"> </input>
+
+        <!--Forgangsviðburður <input name="isPriorityEvent" type="checkbox"></input>-->
+
         <input type="submit" value="Í lagi"></input>
     </form>
 
