@@ -12,11 +12,11 @@ public class Event extends News {
     private Calendar timeOfEvent;
     private Calendar registrationStarts;
     private Calendar registrationEnds;
-    //private boolean isPriorityEvent;
+    private boolean isPriorityEvent;
 
     public Event(String title, String text, String tag, String company,
                  String location, int capacity, Calendar timeOfEvent,
-                 Calendar registrationStarts, Calendar registrationEnds/*, boolean isPriorityEvent*/) {
+                 Calendar registrationStarts, Calendar registrationEnds, boolean isPriorityEvent) {
         super(title, text, tag);
         this.company = company;
         this.location = location;
@@ -24,7 +24,7 @@ public class Event extends News {
         this.timeOfEvent = timeOfEvent;
         this.registrationStarts = registrationStarts;
         this.registrationEnds = registrationEnds;
-        //this.isPriorityEvent = isPriorityEvent;
+        this.isPriorityEvent = isPriorityEvent;
     }
 
     public String getCompany() {
@@ -75,13 +75,13 @@ public class Event extends News {
         this.capacity = capacity;
     }
 
-   /* public boolean isPriorityEvent() {
+    public boolean isPriorityEvent() {
         return isPriorityEvent;
     }
 
     public void setPriorityEvent(boolean priorityEvent) {
         isPriorityEvent = priorityEvent;
-    }*/
+    }
 
     @Override
     public String toString() {
@@ -93,7 +93,7 @@ public class Event extends News {
                 "<h4>Tími:" + timeOfEvent.getTime() + "</h4>" +
                 "<h4>Skráning hefst:" + registrationStarts.getTime() + "</h4>" +
                 "<h4>Skráningu lýkur:" + registrationEnds.getTime() + "</h4>" +
-                "<p>Meginmál: " + getText() + "</p>";// +
-                //"<h4>Forgangsviðburður: " + isPriorityEvent + "</h4>";
+                "<p>Meginmál: " + getText() + "</p>" +
+                "<h4>Forgangsviðburður: " + isPriorityEvent + "</h4>";
     }
 }

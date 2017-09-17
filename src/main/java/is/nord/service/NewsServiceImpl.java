@@ -25,4 +25,12 @@ public class NewsServiceImpl implements NewsService {
 
         return calendar;
     }
+
+    @Override
+    public boolean getPriority(String isChecked) {
+        if (isChecked == null) {
+            return false;
+        }
+        return isChecked.equals("checked");
+    }
 }

@@ -92,14 +92,17 @@ public class NewsController {
                             @RequestParam(value="regStartsDate", required = false) String sRegStartsDate,
                             @RequestParam(value="regEndsTime", required = false) String sRegEndsTime,
                             @RequestParam(value="regEndsDate", required = false) String sRegEndsDate,
+                            @RequestParam(value="isPriorityEvent", required = false) String sIsPriorityEvent,
                             ModelMap model) {
 
+        System.out.println("gildið á checkboxinu er: " + sIsPriorityEvent);
         int capacity = Integer.parseInt(sCapacity);
+        boolean isPriorityEvent = newsService.getPriority(sIsPriorityEvent);
         Calendar timeOfEvent = newsService.getCalendar(sTime, sDate);
         Calendar registrationStarts = newsService.getCalendar(sRegStartsTime, sRegStartsDate);
         Calendar registrationEnds = newsService.getCalendar(sRegEndsTime, sRegEndsDate);
         Event event = new Event(title, text, tag, company, location, capacity,
-                timeOfEvent, registrationStarts, registrationEnds);
+                timeOfEvent, registrationStarts, registrationEnds, isPriorityEvent);
         newsRepository.add(event);
         return "news/makeEvent";
     }

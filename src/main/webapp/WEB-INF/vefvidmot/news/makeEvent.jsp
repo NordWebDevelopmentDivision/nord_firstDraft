@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="css/normalize.css">
 </head>
 <body>
-    <h1>Búa til frétt</h1>
+    <h1>Búa til Viðburð</h1>
 
     <form method="POST" action="/addEvent">
         Titill <input name="title" type="text" placeholder="Titill"> </input>
@@ -40,7 +40,7 @@
         Skráning endar<input name="regEndsTime" type="text" placeholder="HH:MM"> </input>
         <input name="regEndsDate" type="text" placeholder="DD-MM-YYYY"> </input>
 
-        <!--Forgangsviðburður <input name="isPriorityEvent" type="checkbox"></input>-->
+        Forgangsviðburður <input name="isPriorityEvent" type="checkbox" value="checked"></input>
 
         <input type="submit" value="Í lagi"></input>
     </form>
