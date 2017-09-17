@@ -20,8 +20,8 @@
     <link rel="stylesheet" href="css/normalize.css">
 </head>
 <body>
-    <a href="makeNews">Búa til frétt</a>
-    <a href="makeEvent">Búa til viðburð</a>
+    <a href="/news/makeNews">Búa til frétt</a>
+    <a href="/news/makeEvent">Búa til viðburð</a>
     ${news}
 
 </body>

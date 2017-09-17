@@ -16,16 +16,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-/** Authors:
- *      Kári Snær Kárason (ksk12@hi.is),
- *      Ólafur Georg Gylfason (ogg4@hi.is),
- *      Stella Rut Guðmundsdóttir (srg30@hi.is)
- */
+/*
+  Authors:
+    Kári Snær Kárason (ksk12@hi.is),
+    Ólafur Georg Gylfason (ogg4@hi.is),
+    Stella Rut Guðmundsdóttir (srg30@hi.is)
+*/
 
 /**
  * A controller that handles the news feed
  */
-
 @Controller
 @RequestMapping("/")
 public class NewsController {
@@ -50,14 +50,14 @@ public class NewsController {
         ArrayList<News> newsList;
         newsList = (ArrayList<News>) newsRepository.getAll();
         model.addAttribute("news", newsList);
-        return "news/index";
+        return "index";
     }
 
     /**
      * Displays empty form for a news item
      * @return a website with empty form for a news item
      */
-    @RequestMapping("/makeNews")
+    @RequestMapping("/news/makeNews")
     public String makeNews () { return "news/makeNews";}
 
     /**
@@ -68,7 +68,7 @@ public class NewsController {
      * @param model a model with attributes
      * @return a website with an empty form for a news item to be filled
      */
-    @RequestMapping(value="/addNews", method = RequestMethod.POST)
+    @RequestMapping(value="/news/addNews", method = RequestMethod.POST)
     public String addNews (@RequestParam(value="title", required = false) String title,
                            @RequestParam(value="text", required = false) String text,
                            @RequestParam(value="tag", required = false) String tag,
@@ -80,7 +80,7 @@ public class NewsController {
         return "news/makeNews";
     }
 
-    @RequestMapping("/makeEvent")
+    @RequestMapping("/news/makeEvent")
     public String makeEvent () {
         return "news/makeEvent";
     }

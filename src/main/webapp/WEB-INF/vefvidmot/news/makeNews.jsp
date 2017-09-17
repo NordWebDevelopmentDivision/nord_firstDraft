@@ -22,7 +22,7 @@
 <body>
     <h1>Búa til frétt</h1>
 
-    <form method="POST" action="/addNews">
+    <form method="POST" action="/news/addNews">
         Titill <input name="title" type="text" placeholder="Titill"> </input>
 
         Meginmál <textarea class="text" cols="86" rows ="20" name="text"></textarea>

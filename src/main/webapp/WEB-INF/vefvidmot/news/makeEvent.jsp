@@ -22,7 +22,7 @@
 <body>
     <h1>Búa til Viðburð</h1>
 
-    <form method="POST" action="/addEvent">
+    <form method="POST" action="/news/addEvent">
         Titill <input name="title" type="text" placeholder="Titill"> </input>
 
         Meginmál <textarea class="text" cols="86" rows ="20" name="text"></textarea>
