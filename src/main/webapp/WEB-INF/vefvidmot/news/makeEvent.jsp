@@ -17,7 +17,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Nemendafélagið Nörd</title>
-    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="../../css/normalize.css">
 </head>
 <body>
     <h1>Búa til Viðburð</h1>

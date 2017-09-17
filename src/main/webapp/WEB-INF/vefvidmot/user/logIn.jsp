@@ -20,20 +20,20 @@
     <link rel="stylesheet" href="../../css/normalize.css">
 </head>
 <body>
-    <p for="user">Innskráður notandi: ${username != null ? username : "Enginn"}</p>
+    <h1>Innskráning</h1>
 
-    <c:choose>
-        <c:when test="${username == Enginn || username == 'Innskráning tókst ekki'}">
-            <a href="/user/showLogIn">Innskráning</a>
-        </c:when>
-        <c:otherwise>
-            <a href="/user/logOut">Útskráning</a>
-        </c:otherwise>
-    </c:choose>
+    <form method="POST" action="/user/logIn">
+        <label for="username">Notandanafn</label>
+        <input type="text" placeholder="Notandanafn" id="username" name="username" required>
 
-    <a href="/news/makeNews">Búa til frétt</a>
-    <a href="/news/makeEvent">Búa til viðburð</a>
-    ${news}
+        <label for="password">Notandanafn</label>
+        <input type="password" placeholder="Lykilorð" id="password" name="password" required>
+
+        <input type="submit" value="Skrá inn"></input>
+    </form>
+
+
+    <a href="/">Fara á forsíðu</a>
 
 </body>
 
