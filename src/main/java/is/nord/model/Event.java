@@ -14,10 +14,10 @@ public class Event extends News {
     private Calendar registrationEnds;
     private boolean isPriorityEvent;
 
-    public Event(String title, String text, String tag, String company,
+    public Event(String title, String text, String tag, String author, Calendar datePosted, String company,
                  String location, int capacity, Calendar timeOfEvent,
                  Calendar registrationStarts, Calendar registrationEnds, boolean isPriorityEvent) {
-        super(title, text, tag);
+        super(title, text, tag, author, datePosted);
         this.company = company;
         this.location = location;
         this.capacity = capacity;
@@ -94,6 +94,7 @@ public class Event extends News {
                 "<h4>Skráning hefst:" + registrationStarts.getTime() + "</h4>" +
                 "<h4>Skráningu lýkur:" + registrationEnds.getTime() + "</h4>" +
                 "<p>Meginmál: " + getText() + "</p>" +
-                "<h4>Forgangsviðburður: " + isPriorityEvent + "</h4>";
+                "<h4>Forgangsviðburður: " + isPriorityEvent + "</h4>" +
+                "<h4>Birt: " + getDatePosted().getTime() + " - " + getAuthor() + "</h4>";
     }
 }

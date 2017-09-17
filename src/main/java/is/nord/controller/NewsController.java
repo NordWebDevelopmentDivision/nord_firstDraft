@@ -3,6 +3,7 @@ package is.nord.controller;
 import is.nord.model.Event;
 import is.nord.model.News;
 import is.nord.repository.NewsRepository;
+import is.nord.service.EventService;
 import is.nord.service.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,7 +35,10 @@ public class NewsController {
     private NewsRepository newsRepository;
 
     @Autowired
-    NewsService newsService;
+    private EventService eventService;
+
+    @Autowired
+    private NewsService newsService;
 
     /**
      * Displays the list of all news, with the latest one at the top
@@ -69,7 +73,9 @@ public class NewsController {
                            @RequestParam(value="text", required = false) String text,
                            @RequestParam(value="tag", required = false) String tag,
                            ModelMap model) {
-        News news = new News(title, text, tag);
+        String author = newsService.getAuthor();
+        Calendar calendar = newsService.getCurrentDate();
+        News news = new News(title, text, tag, author, calendar);
         newsRepository.add(news);
         return "news/makeNews";
     }
@@ -97,11 +103,13 @@ public class NewsController {
 
         System.out.println("gildið á checkboxinu er: " + sIsPriorityEvent);
         int capacity = Integer.parseInt(sCapacity);
-        boolean isPriorityEvent = newsService.getPriority(sIsPriorityEvent);
-        Calendar timeOfEvent = newsService.getCalendar(sTime, sDate);
-        Calendar registrationStarts = newsService.getCalendar(sRegStartsTime, sRegStartsDate);
-        Calendar registrationEnds = newsService.getCalendar(sRegEndsTime, sRegEndsDate);
-        Event event = new Event(title, text, tag, company, location, capacity,
+        boolean isPriorityEvent = eventService.getPriority(sIsPriorityEvent);
+        Calendar timeOfEvent = eventService.getCalendar(sTime, sDate);
+        Calendar registrationStarts = eventService.getCalendar(sRegStartsTime, sRegStartsDate);
+        Calendar registrationEnds = eventService.getCalendar(sRegEndsTime, sRegEndsDate);
+        String author = newsService.getAuthor();
+        Calendar calendar = newsService.getCurrentDate();
+        Event event = new Event(title, text, tag, author, calendar, company, location, capacity,
                 timeOfEvent, registrationStarts, registrationEnds, isPriorityEvent);
         newsRepository.add(event);
         return "news/makeEvent";
