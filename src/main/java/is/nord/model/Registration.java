@@ -2,6 +2,9 @@ package is.nord.model;
 
 import is.nord.controller.UserController;
 
+import java.sql.Timestamp;
+import java.util.Calendar;
+
 /*
   Authors:
     Kári Snær Kárason (ksk12@hi.is),
@@ -16,10 +19,10 @@ public class Registration {
 
     private String username;
     private String event;
-    private double timestamp;
+    private Timestamp timestamp;
     private boolean isPriorityRegistration;
 
-    public Registration(String username, String event, double timestamp, boolean isPriorityRegistration){
+    public Registration(String username, String event, Timestamp timestamp, boolean isPriorityRegistration){
         this.username = username;
         this.event = event;
         this.timestamp = timestamp;
@@ -53,7 +56,7 @@ public class Registration {
         return event;
     }
 
-    public double getTimestamp() {
+    public Timestamp getTimestamp() {
         return timestamp;
     }
 

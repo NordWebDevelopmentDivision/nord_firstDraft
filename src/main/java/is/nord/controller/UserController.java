@@ -43,18 +43,14 @@ public class UserController {
         String fakePassword2 = "irak";
 
         if(fakeUsername.equals(username) && fakePassword.equals(password)) {
-            model.addAttribute("username", username);
             userName = username;
-            System.out.println(userName);
-            return "index";
+            return "/user/frontPageLink";
         } else if(fakeUsername2.equals(username) && fakePassword2.equals(password)) {
-            model.addAttribute("username", username);
             userName = username;
-            System.out.println(userName);
-            return "index";
+            return "/user/frontPageLink";
         } else {
-            model.addAttribute("username", "Innskráning tókst ekki");
-            return "index";
+            userName = "Innskráning tókst ekki";
+            return "/user/frontPageLink";
         }
     }
 
@@ -65,11 +61,15 @@ public class UserController {
      */
     @RequestMapping(value="/logOut", method= RequestMethod.GET)
     public String logOut (ModelMap model) {
-        model.addAttribute("username", "Enginn");
-        return "index";
+        userName = "";
+        return "/user/frontPageLink";
     }
 
-    public static String getUsername(){
+    /**
+     * Getter for the variable userName
+     * @return userName
+     */
+    public static String getUserName(){
         return userName;
     }
 }

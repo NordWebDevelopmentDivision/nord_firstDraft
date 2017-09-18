@@ -20,22 +20,9 @@
     <link rel="stylesheet" href="../../css/normalize.css">
 </head>
 <body>
-    <h1>Nemendafélagið Nörd</h1>
-    <p for="user">Innskráður notandi: ${userName}</p>
+    <h1></h1>
 
-    <c:choose>
-        <c:when test="${userName == null || userName == '' || userName == 'Innskráning tókst ekki'}">
-            <a href="/user/showLogIn">Innskráning</a>
-        </c:when>
-        <c:otherwise>
-            <a href="/user/logOut">Útskráning</a>
-        </c:otherwise>
-    </c:choose>
-
-    <a href="/news/makeNews">Búa til frétt</a>
-    <a href="/news/makeEvent">Búa til viðburð</a>
-    ${news}
-    ${registrations}
+    <a href="/">Fara á forsíðu</a>
 
 </body>
 
