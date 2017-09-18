@@ -95,6 +95,10 @@ public class Event extends News {
                 "<h4>Skráningu lýkur:" + registrationEnds.getTime() + "</h4>" +
                 "<p>Meginmál: " + getText() + "</p>" +
                 "<h4>Forgangsviðburður: " + isPriorityEvent + "</h4>" +
-                "<h4>Birt: " + getDatePosted().getTime() + " - " + getAuthor() + "</h4>";
+                "<h4>Birt: " + getDatePosted().getTime() + " - " + getAuthor() + "</h4>" +
+                "<form method=\"POST\" action=\"/registration/registration\">" +
+                    "<input type=\"text\" id=\"event\" name=\"event\" value=\"" + this.getTitle() + "\" style=\"display:none;\"/>" +
+                    "<input type=\"submit\" value=\"Skrá mig!\"></input>" +
+                "</form>";
     }
 }

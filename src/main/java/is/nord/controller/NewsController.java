@@ -2,9 +2,12 @@ package is.nord.controller;
 
 import is.nord.model.Event;
 import is.nord.model.News;
+import is.nord.model.Registration;
 import is.nord.repository.NewsRepository;
+import is.nord.repository.RegistrationRepository;
 import is.nord.service.EventService;
 import is.nord.service.NewsService;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,6 +38,9 @@ public class NewsController {
     private NewsRepository newsRepository;
 
     @Autowired
+    private RegistrationRepository registrationRepository;
+
+    @Autowired
     private EventService eventService;
 
     @Autowired
@@ -50,6 +56,13 @@ public class NewsController {
         ArrayList<News> newsList;
         newsList = (ArrayList<News>) newsRepository.getAll();
         model.addAttribute("news", newsList);
+
+        ArrayList<Registration> registrationList;
+        registrationList = (ArrayList<Registration>) registrationRepository.getAll();
+        model.addAttribute("registrations", registrationList);
+
+        String userName = UserController.userName;
+        model.addAttribute("userName", userName);
         return "index";
     }
 
@@ -85,7 +98,7 @@ public class NewsController {
         return "news/makeEvent";
     }
 
-    @RequestMapping(value="/addEvent", method = RequestMethod.POST)
+    @RequestMapping(value="/news/addEvent", method = RequestMethod.POST)
     public String addEvent (@RequestParam(value="title", required = false) String title,
                             @RequestParam(value="text", required = false) String text,
                             @RequestParam(value="tag", required = false) String tag,

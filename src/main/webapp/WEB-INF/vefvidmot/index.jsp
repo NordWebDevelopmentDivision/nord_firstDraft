@@ -21,7 +21,7 @@
 </head>
 <body>
     <p for="user">Innskráður notandi: ${username != null ? username : "Enginn"}</p>
-
+    <p>${userName}</p>
     <c:choose>
         <c:when test="${username == Enginn || username == 'Innskráning tókst ekki'}">
             <a href="/user/showLogIn">Innskráning</a>
@@ -34,6 +34,7 @@
     <a href="/news/makeNews">Búa til frétt</a>
     <a href="/news/makeEvent">Búa til viðburð</a>
     ${news}
+    ${registrations}
 
 </body>
 
