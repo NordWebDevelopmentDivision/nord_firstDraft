@@ -5,6 +5,7 @@ import is.nord.model.Event;
 import is.nord.model.Registration;
 import is.nord.repository.NewsRepository;
 import is.nord.repository.RegistrationRepository;
+import is.nord.service.NewsServiceImpl;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.sql.Timestamp;
 
 /*
   Authors:
@@ -29,6 +32,10 @@ public class RegistrationController {
     // Connect with the registration repository
     @Autowired
     private RegistrationRepository registrationRepository;
+
+    // Connect with new service
+    @Autowired
+    private NewsServiceImpl newsService;
 
 
     /*@RequestMapping("/showRegistration")
@@ -58,9 +65,9 @@ public class RegistrationController {
     @RequestMapping(value="/registration", method= RequestMethod.POST)
     public String register (@RequestParam(value="event", required=false) String event, ModelMap model) {
 
-        //model.addAttribute("username", UserController.getUsername());
+        //model.addAttribute("username", UserController.getUserName());
         //model.addAttribute("event", event);
-        Registration registration = new Registration(UserController.userName, event, 1.2, true);
+        Registration registration = new Registration(UserController.userName, event, new Timestamp(newsService.getCurrentDate().getTimeInMillis()), true);
         registrationRepository.add(registration);
         return "/registration/registrationSuccessful";
     }
