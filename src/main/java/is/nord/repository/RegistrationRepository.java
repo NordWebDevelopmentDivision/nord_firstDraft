@@ -5,6 +5,10 @@ import is.nord.model.Registration;
 
 import java.util.List;
 
+/* Authors:
+ *      Kári Snær Kárason (ksk12@hi.is),
+ */
+
 /**
  * A storage for news items
  */

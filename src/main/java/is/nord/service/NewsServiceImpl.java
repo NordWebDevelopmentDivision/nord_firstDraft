@@ -6,6 +6,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+/** Authors:
+ *      Ólafur Georg Gylfason (ogg4@hi.is),
+ */
+
 @Service
 public class NewsServiceImpl implements NewsService {
     @Override

@@ -2,15 +2,20 @@ package is.nord.model;
 
 import java.util.Calendar;
 
+/* Authors:
+ *      Ólafur Georg Gylfason (ogg4@hi.is),
+ */
+
 /**
- * News class. Superclass of Event
+ * Stores information about news.
+ * Superclass of Event
  */
 public class News {
-    private String title;
-    private String text;
-    private String tag;
-    private String author;
-    private Calendar datePosted;
+    private String title; // title of the news item
+    private String text; // text of the news item
+    private String tag; // tag of the news item
+    private String author; // author of the news item
+    private Calendar datePosted; // posting date of the news item
 
     public News() {}
 
@@ -62,6 +67,10 @@ public class News {
         this.datePosted = datePosted;
     }
 
+    /**
+     * A method to format how the news item is shown
+     * @return a string with information about the news itemn
+     */
     @Override
     public String toString() {
         return "<h1>" + title + "</h1>" +

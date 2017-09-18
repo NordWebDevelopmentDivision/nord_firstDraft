@@ -1,12 +1,9 @@
 package is.nord.controller;
 
 
-import is.nord.model.Event;
 import is.nord.model.Registration;
-import is.nord.repository.NewsRepository;
 import is.nord.repository.RegistrationRepository;
 import is.nord.service.NewsServiceImpl;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -16,10 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.Timestamp;
 
-/*
-  Authors:
-    Kári Snær Kárason (ksk12@hi.is),
-*/
+/* Authors:
+ *      Kári Snær Kárason (ksk12@hi.is),
+ */
 
 /**
  * A controller that handles registrations to events
@@ -29,19 +25,11 @@ import java.sql.Timestamp;
 @RequestMapping("/registration")
 public class RegistrationController {
 
-    // Connect with the registration repository
     @Autowired
-    private RegistrationRepository registrationRepository;
+    private RegistrationRepository registrationRepository; // Connect with the registration repository
 
-    // Connect with new service
     @Autowired
-    private NewsServiceImpl newsService;
-
-
-    /*@RequestMapping("/showRegistration")
-    public String showLogIn (String event) {
-        return "registration/registration";
-    }*/
+    private NewsServiceImpl newsService; // Connect with new service
 
     /**
      * Deletes the registration from the repository

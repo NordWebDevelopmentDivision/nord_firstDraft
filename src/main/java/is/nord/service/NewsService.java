@@ -2,7 +2,16 @@ package is.nord.service;
 
 import java.util.Calendar;
 
+/* Authors:
+ *      Ólafur Georg Gylfason (ogg4@hi.is),
+ */
+
+/**
+ * Handles logic for news.
+ */
+
+
 public interface NewsService {
-    public String getAuthor();
-    public Calendar getCurrentDate();
+    String getAuthor();
+    Calendar getCurrentDate();
 }

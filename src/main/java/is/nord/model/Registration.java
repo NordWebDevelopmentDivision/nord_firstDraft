@@ -3,7 +3,6 @@ package is.nord.model;
 import is.nord.controller.UserController;
 
 import java.sql.Timestamp;
-import java.util.Calendar;
 
 /*
   Authors:
@@ -16,11 +15,10 @@ import java.util.Calendar;
 
 public class Registration {
 
-
-    private String username;
-    private String event;
-    private Timestamp timestamp;
-    private boolean isPriorityRegistration;
+    private String username; // username of the person that's logged in
+    private String event; // which event to register in
+    private Timestamp timestamp; // time of the registration
+    private boolean isPriorityRegistration; // is the event a priority event for old students or not
 
     public Registration(String username, String event, Timestamp timestamp, boolean isPriorityRegistration){
         this.username = username;

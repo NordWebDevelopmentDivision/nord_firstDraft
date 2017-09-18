@@ -6,10 +6,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-/*
-  Authors:
-    Stella Rut Guðmundsdóttir (srg30@hi.is)
-*/
+/* Authors:
+ *      Stella Rut Guðmundsdóttir (srg30@hi.is)
+ */
 
 /**
  * A controller to handle the log in
@@ -65,10 +64,6 @@ public class UserController {
         return "/user/frontPageLink";
     }
 
-    /**
-     * Getter for the variable userName
-     * @return userName
-     */
     public static String getUserName(){
         return userName;
     }

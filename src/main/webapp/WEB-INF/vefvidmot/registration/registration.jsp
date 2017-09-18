@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <!--
- Höfundar:
+ Authors:
      Kári Snær Kárason (ksk12@hi.is),
  -->
 

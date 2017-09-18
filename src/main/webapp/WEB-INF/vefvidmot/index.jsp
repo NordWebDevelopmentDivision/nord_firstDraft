@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 
 <!--
- Höfundar:
+ Authors:
      Kári Snær Kárason (ksk12@hi.is),
      Ólafur Georg Gylfason (ogg4@hi.is),
      Stella Rut Guðmundsdóttir (srg30@hi.is)
- Ath. skrifað eftir fyrirlestri hjá Ebbu Þóru 31. ágúst 2017.
  -->
 
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>

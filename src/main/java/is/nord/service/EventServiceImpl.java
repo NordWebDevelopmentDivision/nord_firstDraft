@@ -5,6 +5,10 @@ import org.springframework.stereotype.Service;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+/** Authors:
+ *      Ólafur Georg Gylfason (ogg4@hi.is),
+ */
+
 @Service
 public class EventServiceImpl implements EventService {
 
@@ -28,9 +32,6 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public boolean getPriority(String isChecked) {
-        if (isChecked == null) {
-            return false;
-        }
-        return isChecked.equals("checked");
+        return isChecked != null && isChecked.equals("checked");
     }
 }

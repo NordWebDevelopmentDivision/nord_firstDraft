@@ -4,6 +4,10 @@ import is.nord.model.News;
 
 import java.util.List;
 
+/* Authors:
+ *      Ólafur Georg Gylfason (ogg4@hi.is),
+ */
+
 /**
  * A storage for news items
  */

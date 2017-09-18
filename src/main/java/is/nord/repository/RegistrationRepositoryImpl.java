@@ -1,16 +1,19 @@
 package is.nord.repository;
 
-import is.nord.model.News;
 import is.nord.model.Registration;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/** Authors:
+ *      Kári Snær Kárason (ksk12@hi.is),
+ */
+
 @Repository
 public class RegistrationRepositoryImpl implements RegistrationRepository{
 
-    private final List<Registration> registrationRepo;
+    private final List<Registration> registrationRepo; // a list of all registrations
 
     public RegistrationRepositoryImpl() {
         this.registrationRepo = new ArrayList<Registration>();

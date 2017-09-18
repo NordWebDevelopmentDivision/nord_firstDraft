@@ -7,7 +7,6 @@ import is.nord.repository.NewsRepository;
 import is.nord.repository.RegistrationRepository;
 import is.nord.service.EventService;
 import is.nord.service.NewsService;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,12 +18,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-/*
-  Authors:
-    Kári Snær Kárason (ksk12@hi.is),
-    Ólafur Georg Gylfason (ogg4@hi.is),
-    Stella Rut Guðmundsdóttir (srg30@hi.is)
-*/
+/* Authors:
+ *      Kári Snær Kárason (ksk12@hi.is),
+ *      Ólafur Georg Gylfason (ogg4@hi.is),
+ */
 
 /**
  * A controller that handles the news feed
@@ -33,18 +30,17 @@ import java.util.Calendar;
 @RequestMapping("/")
 public class NewsController {
 
-    // Connection with the news repository
     @Autowired
-    private NewsRepository newsRepository;
+    private NewsRepository newsRepository; // Connection with the news repository
 
     @Autowired
-    private RegistrationRepository registrationRepository;
+    private RegistrationRepository registrationRepository; // Connection with the registration repository
 
     @Autowired
-    private EventService eventService;
+    private EventService eventService; // Connection with the event service
 
     @Autowired
-    private NewsService newsService;
+    private NewsService newsService; // Connection with the news service
 
     /**
      * Displays the list of all news, with the latest one at the top
@@ -93,11 +89,34 @@ public class NewsController {
         return "news/makeNews";
     }
 
+    /**
+     * Displays a form to make an event
+     * @return a website with an event form
+     */
     @RequestMapping("/news/makeEvent")
     public String makeEvent () {
         return "news/makeEvent";
     }
 
+    /**
+     * This method handles all the parameters for an event, which are pasted in
+     * the makeEvent form
+     * @param title title of event
+     * @param text text descibing the event
+     * @param tag tag of the event
+     * @param company company which is hosting the event
+     * @param location location of the event
+     * @param sCapacity how many can attend the event
+     * @param sTime when the event starts (HH:MM)
+     * @param sDate what date the event is on (DD-MM-YYYY)
+     * @param sRegStartsTime the time when the registration starts (HH:MM)
+     * @param sRegStartsDate the date when the registration starts (DD-MM-YYYY)
+     * @param sRegEndsTime the time when the registration ends (HH:MM)
+     * @param sRegEndsDate the date when the registration ends (DD-MM-YYYY)
+     * @param sIsPriorityEvent is the event a priority event or not
+     * @param model the model
+     * @return a website displaying a form for events
+     */
     @RequestMapping(value="/news/addEvent", method = RequestMethod.POST)
     public String addEvent (@RequestParam(value="title", required = false) String title,
                             @RequestParam(value="text", required = false) String text,
@@ -114,7 +133,6 @@ public class NewsController {
                             @RequestParam(value="isPriorityEvent", required = false) String sIsPriorityEvent,
                             ModelMap model) {
 
-        System.out.println("gildið á checkboxinu er: " + sIsPriorityEvent);
         int capacity = Integer.parseInt(sCapacity);
         boolean isPriorityEvent = eventService.getPriority(sIsPriorityEvent);
         Calendar timeOfEvent = eventService.getCalendar(sTime, sDate);

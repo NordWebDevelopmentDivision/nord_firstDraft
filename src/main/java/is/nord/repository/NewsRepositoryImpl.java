@@ -6,10 +6,14 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 
+/** Authors:
+ *      Ólafur Georg Gylfason (ogg4@hi.is),
+ */
+
 @Repository
 public class NewsRepositoryImpl implements NewsRepository{
 
-    private final List<News> newsRepo;
+    private final List<News> newsRepo; // a list for all news items
 
     public NewsRepositoryImpl() {
         this.newsRepo = new ArrayList<News>();

@@ -2,17 +2,22 @@ package is.nord.model;
 
 import java.util.Calendar;
 
+/* Authors:
+ *      Ólafur Georg Gylfason (ogg4@hi.is),
+ */
+
 /**
- * class Event. Subclass of News
+ * A class that is a subclass of News.
+ * Stores information about events.
  */
 public class Event extends News {
-    private String company;
-    private String location;
-    private int capacity;
-    private Calendar timeOfEvent;
-    private Calendar registrationStarts;
-    private Calendar registrationEnds;
-    private boolean isPriorityEvent;
+    private String company; // the company that hosts the event
+    private String location; // the location of the event
+    private int capacity; // the maximum allowed attendance of the event
+    private Calendar timeOfEvent; // the time of the event
+    private Calendar registrationStarts; // when the registration for the event starts
+    private Calendar registrationEnds; // when the registration for the event ends
+    private boolean isPriorityEvent; // is this a priority event (for older students) or not
 
     public Event(String title, String text, String tag, String author, Calendar datePosted, String company,
                  String location, int capacity, Calendar timeOfEvent,
@@ -83,6 +88,10 @@ public class Event extends News {
         isPriorityEvent = priorityEvent;
     }
 
+    /**
+     * A method to format how the event is shown
+     * @return a string with information about the event
+     */
     @Override
     public String toString() {
         return "<h1>Titill: " + getTitle() + "</h1>" +
