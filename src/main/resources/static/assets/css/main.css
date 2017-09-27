@@ -30,22 +30,11 @@ img {
 HEADING
 **********************************/
 
-.new-items {
-    padding-top:100px;
-}
-
-
 
 /**********************************
 NAVIGATION
 **********************************/
 
-nav {
-  clear: both;
-  position: fixed;
-  width: 100%;
-  z-index: 1;
-}
 
 nav ul {
   list-style: none;
@@ -64,36 +53,12 @@ nav a {
   padding: 0 10px;
 }
 
-#homeButton {
-  font-size: 2.5em;
-  margin-right: 15px;
-
-}
 
 
 
 /**********************************
 ADS
 **********************************/
-
-#ads {
-  position: relative;
-  padding-right: 5%;
-  padding-top: 50px;
-}
-
-#ads li {
-  list-style: none;
-}
-
-#ads img {
-  float: right;
-  width: 100px;
-  height: auto;
-  margin: 10px 10px;
-  border: 1px solid #000; 
-}
-
 
 
 
@@ -102,7 +67,7 @@ PAGE: HOMEPAGE
 ********************************/
 
 .news-item {
-    border: 1px solid #000;
+    border: 1px solid rgb(49, 181, 95);
 }
 
 

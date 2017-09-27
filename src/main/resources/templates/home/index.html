@@ -26,6 +26,7 @@
 
             <!-- If the user is authenticated -->
             <div th:if="${#authorization.expression('isAuthenticated()')}">
+                <h2>Skráning:</h2>
                 <!-- Print out the list of registrations for each event -->
                 <div th:each="registration : ${registrationService.findRegistrationsByEvent(news)}">
                     <h4 th:text="${registration.user.username}"></h4>
