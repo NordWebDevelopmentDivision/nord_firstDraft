@@ -1,30 +1,34 @@
 package is.nord.model;
 
-import java.util.Calendar;
+import javax.persistence.*;
+import java.util.Date;
 
-/* Authors:
- *      Ólafur Georg Gylfason (ogg4@hi.is),
- */
+/*
+ * Author:
+ *       Ólafur Georg Gylfason (ogg4@hi.is)
+*/
 
-/**
- * Stores information about news.
- * Superclass of Event
- */
+@Entity
 public class News {
-    private String title; // title of the news item
-    private String text; // text of the news item
-    private String tag; // tag of the news item
-    private String author; // author of the news item
-    private Calendar datePosted; // posting date of the news item
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;                // The id of the news item
+    private String title;           // The title of the news item
+
+    @Column(columnDefinition = "text")
+    private String description;     // The description of the news item
+    private String tag;             // The tag of the news item
+    private String author;          // The author of the news item
+    private Date datePosted;        // The time when the news item was posted
 
     public News() {}
 
-    public News(String title, String text, String tag, String author, Calendar datePosted) {
-        this.title = title;
-        this.text = text;
-        this.tag = tag;
-        this.author = author;
-        this.datePosted = datePosted;
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -35,12 +39,12 @@ public class News {
         this.title = title;
     }
 
-    public String getText() {
-        return text;
+    public String getDescription() {
+        return description;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getTag() {
@@ -59,23 +63,11 @@ public class News {
         this.author = author;
     }
 
-    public Calendar getDatePosted() {
+    public Date getDatePosted() {
         return datePosted;
     }
 
-    public void setDatePosted(Calendar datePosted) {
+    public void setDatePosted(Date datePosted) {
         this.datePosted = datePosted;
-    }
-
-    /**
-     * A method to format how the news item is shown
-     * @return a string with information about the news itemn
-     */
-    @Override
-    public String toString() {
-        return "<h1>" + title + "</h1>" +
-                "<h4>" + tag + "</h4>" +
-                "<p>" + text + "</p>" +
-                "<h4>Birt: " + datePosted.getTime() + " - " + author + "</h4>";
     }
 }

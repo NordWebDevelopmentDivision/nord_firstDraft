@@ -2,147 +2,125 @@ package is.nord.controller;
 
 import is.nord.model.Event;
 import is.nord.model.News;
-import is.nord.model.Registration;
-import is.nord.repository.NewsRepository;
-import is.nord.repository.RegistrationRepository;
-import is.nord.service.EventService;
+import is.nord.model.User;
 import is.nord.service.NewsService;
+import is.nord.service.RegistrationService;
+import is.nord.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
-import java.util.Calendar;
+import java.security.Principal;
 
-/* Authors:
- *      Kári Snær Kárason (ksk12@hi.is),
- *      Ólafur Georg Gylfason (ogg4@hi.is),
- */
+/*
+ * Author:
+ *       Ólafur Georg Gylfason (ogg4@hi.is)
+*/
 
 /**
- * A controller that handles the news feed
+ * A controller that controls news-related things
  */
 @Controller
-@RequestMapping("/")
 public class NewsController {
 
     @Autowired
-    private NewsRepository newsRepository; // Connection with the news repository
+    private NewsService newsService;    // Establish a connection to the newsService
 
     @Autowired
-    private RegistrationRepository registrationRepository; // Connection with the registration repository
+    private UserService userService;    // Establish a connection to the userService
 
     @Autowired
-    private EventService eventService; // Connection with the event service
+    private RegistrationService registrationService;    // Establish a connection to the registrationService
 
-    @Autowired
-    private NewsService newsService; // Connection with the news service
 
     /**
-     * Displays the list of all news, with the latest one at the top
-     * @param model model of the view
-     * @return a website displaying news
-     */
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String showNews (Model model) {
-        ArrayList<News> newsList;
-        newsList = (ArrayList<News>) newsRepository.getAll();
-        model.addAttribute("news", newsList);
-
-        ArrayList<Registration> registrationList;
-        registrationList = (ArrayList<Registration>) registrationRepository.getAll();
-        model.addAttribute("registrations", registrationList);
-
-        String userName = UserController.userName;
-        model.addAttribute("userName", userName);
-        return "index";
-    }
-
-    /**
-     * Displays empty form for a news item
-     * @return a website with empty form for a news item
-     */
-    @RequestMapping("/news/makeNews")
-    public String makeNews () { return "news/makeNews";}
-
-    /**
-     * Receives a news item and adds it to the news repository
-     * @param title the title of the news item
-     * @param text  the text of the news item
-     * @param tag   the tag of the news item
-     * @param model a model with attributes
-     * @return a website with an empty form for a news item to be filled
-     */
-    @RequestMapping(value="/news/addNews", method = RequestMethod.POST)
-    public String addNews (@RequestParam(value="title", required = false) String title,
-                           @RequestParam(value="text", required = false) String text,
-                           @RequestParam(value="tag", required = false) String tag,
-                           ModelMap model) {
-        String author = newsService.getAuthor();
-        Calendar calendar = newsService.getCurrentDate();
-        News news = new News(title, text, tag, author, calendar);
-        newsRepository.add(news);
-        return "news/makeNews";
-    }
-
-    /**
-     * Displays a form to make an event
-     * @return a website with an event form
-     */
-    @RequestMapping("/news/makeEvent")
-    public String makeEvent () {
-        return "news/makeEvent";
-    }
-
-    /**
-     * This method handles all the parameters for an event, which are pasted in
-     * the makeEvent form
-     * @param title title of event
-     * @param text text descibing the event
-     * @param tag tag of the event
-     * @param company company which is hosting the event
-     * @param location location of the event
-     * @param sCapacity how many can attend the event
-     * @param sTime when the event starts (HH:MM)
-     * @param sDate what date the event is on (DD-MM-YYYY)
-     * @param sRegStartsTime the time when the registration starts (HH:MM)
-     * @param sRegStartsDate the date when the registration starts (DD-MM-YYYY)
-     * @param sRegEndsTime the time when the registration ends (HH:MM)
-     * @param sRegEndsDate the date when the registration ends (DD-MM-YYYY)
-     * @param sIsPriorityEvent is the event a priority event or not
+     * Index of all news items
      * @param model the model
-     * @return a website displaying a form for events
+     * @return a webpage displaying all news items
      */
-    @RequestMapping(value="/news/addEvent", method = RequestMethod.POST)
-    public String addEvent (@RequestParam(value="title", required = false) String title,
-                            @RequestParam(value="text", required = false) String text,
-                            @RequestParam(value="tag", required = false) String tag,
-                            @RequestParam(value="company", required = false) String company,
-                            @RequestParam(value="location", required = false) String location,
-                            @RequestParam(value="capacity", required = false) String sCapacity,
-                            @RequestParam(value="timeOfEvent", required = false) String sTime,
-                            @RequestParam(value="dateOfEvent", required = false) String sDate,
-                            @RequestParam(value="regStartsTime", required = false) String sRegStartsTime,
-                            @RequestParam(value="regStartsDate", required = false) String sRegStartsDate,
-                            @RequestParam(value="regEndsTime", required = false) String sRegEndsTime,
-                            @RequestParam(value="regEndsDate", required = false) String sRegEndsDate,
-                            @RequestParam(value="isPriorityEvent", required = false) String sIsPriorityEvent,
-                            ModelMap model) {
+    @RequestMapping("/")
+    public String listNews(Model model, Principal principal) {
+        // Get all news items
+        Iterable<News> news = newsService.findAll();
+        // Add them to the model
+        model.addAttribute("news", news);
 
-        int capacity = Integer.parseInt(sCapacity);
-        boolean isPriorityEvent = eventService.getPriority(sIsPriorityEvent);
-        Calendar timeOfEvent = eventService.getCalendar(sTime, sDate);
-        Calendar registrationStarts = eventService.getCalendar(sRegStartsTime, sRegStartsDate);
-        Calendar registrationEnds = eventService.getCalendar(sRegEndsTime, sRegEndsDate);
-        String author = newsService.getAuthor();
-        Calendar calendar = newsService.getCurrentDate();
-        Event event = new Event(title, text, tag, author, calendar, company, location, capacity,
-                timeOfEvent, registrationStarts, registrationEnds, isPriorityEvent);
-        newsRepository.add(event);
-        return "news/makeEvent";
+        // If a user is logged in then add his/her object to the model
+        if (principal != null) {
+            // Get the user
+            User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            model.addAttribute("user", user);
+        }
+
+        // Allow method calls from the thymeleaf template to registrationService
+        model.addAttribute("registrationService", registrationService);
+        return "home/index";
     }
+
+    /**
+     * Form for adding a new news item
+     * @param model the model
+     * @return a webpage with a form for adding a new news item
+     */
+    @RequestMapping("/addNews")
+    public String formNewNews(Model model) {
+        // Add model attributes needed for new form
+        model.addAttribute("news", new News());
+        model.addAttribute("submit","Bæta við");
+
+        return "news/form";
+    }
+
+    @RequestMapping("/addEvent")
+    public String formNewEvent(Model model) {
+        // Add model attributes needed for new form
+        model.addAttribute("event", new Event());
+        model.addAttribute("submit","Bæta við");
+
+        return "event/form";
+    }
+
+    /**
+     * Add a news item if valid data is received TODO: validate the received data
+     * @param news the news object formed from the user input that is to be added
+     * @return back to the main page
+     */
+    @RequestMapping(value = "/saveNews", method = RequestMethod.POST)
+    public String saveNews(News news) {
+        // Get the user
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        // Set author
+        news.setAuthor(user.getUsername());
+
+        // Save to database through newsService
+        newsService.save(news);
+
+        // Redirect browser to /
+        return "redirect:/";
+    }
+
+    /**
+     * Add a event if valid data is received TODO: validate the received data
+     * @param event the event object formed from the user input that is to be added
+     * @return Back to the main page
+     */
+    @RequestMapping(value = "/saveEvent", method = RequestMethod.POST)
+    public String saveEvent(Event event) {
+        // Get the user
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        // Set author
+        event.setAuthor(user.getUsername());
+
+        // Save to database through newsService
+        newsService.save(event);
+
+        // Redirect browser to /
+        return "redirect:/";
+    }
+
 }

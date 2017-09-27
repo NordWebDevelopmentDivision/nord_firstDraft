@@ -1,67 +1,36 @@
 package is.nord.model;
 
-import java.util.Calendar;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 
-/* Authors:
- *      Ólafur Georg Gylfason (ogg4@hi.is),
- */
+/*
+ * Author:
+ *       Ólafur Georg Gylfason (ogg4@hi.is)
+*/
 
-/**
- * A class that is a subclass of News.
- * Stores information about events.
- */
+@Entity
 public class Event extends News {
-    private String company; // the company that hosts the event
-    private String location; // the location of the event
-    private int capacity; // the maximum allowed attendance of the event
-    private Calendar timeOfEvent; // the time of the event
-    private Calendar registrationStarts; // when the registration for the event starts
-    private Calendar registrationEnds; // when the registration for the event ends
-    private boolean isPriorityEvent; // is this a priority event (for older students) or not
+    private String host;            // The company or host of the event
+    private String location;        // The location of the event
+    private int capacity;           // The maximum allowed attendance to the event
+    private Date timeOfEvent;       // The time of the event
+    private Date registrationOpens; // The time when registration for the event opens
+    private Date registrationCloses; // The time when registration for the event closes
+    private boolean isPriorityEvent; // Whether 2nd and 3rd year students have priority
 
-    public Event(String title, String text, String tag, String author, Calendar datePosted, String company,
-                 String location, int capacity, Calendar timeOfEvent,
-                 Calendar registrationStarts, Calendar registrationEnds, boolean isPriorityEvent) {
-        super(title, text, tag, author, datePosted);
-        this.company = company;
-        this.location = location;
-        this.capacity = capacity;
-        this.timeOfEvent = timeOfEvent;
-        this.registrationStarts = registrationStarts;
-        this.registrationEnds = registrationEnds;
-        this.isPriorityEvent = isPriorityEvent;
+    @OneToMany(mappedBy = "event")
+    private List<Registration> registrations = new ArrayList<>();
+
+    public String getHost() {
+        return host;
     }
 
-    public String getCompany() {
-        return company;
-    }
-
-    public void setCompany(String company) {
-        this.company = company;
-    }
-
-    public Calendar getTimeOfEvent() {
-        return timeOfEvent;
-    }
-
-    public void setTimeOfEvent(Calendar timeOfEvent) {
-        this.timeOfEvent = timeOfEvent;
-    }
-
-    public Calendar getRegistrationStarts() {
-        return registrationStarts;
-    }
-
-    public void setRegistrationStarts(Calendar registrationStarts) {
-        this.registrationStarts = registrationStarts;
-    }
-
-    public Calendar getRegistrationEnds() {
-        return registrationEnds;
-    }
-
-    public void setRegistrationEnds(Calendar registrationEnds) {
-        this.registrationEnds = registrationEnds;
+    public void setHost(String host) {
+        this.host = host;
     }
 
     public String getLocation() {
@@ -80,6 +49,30 @@ public class Event extends News {
         this.capacity = capacity;
     }
 
+    public Date getTimeOfEvent() {
+        return timeOfEvent;
+    }
+
+    public void setTimeOfEvent(Date timeOfEvent) {
+        this.timeOfEvent = timeOfEvent;
+    }
+
+    public Date getRegistrationOpens() {
+        return registrationOpens;
+    }
+
+    public void setRegistrationOpens(Date registrationOpens) {
+        this.registrationOpens = registrationOpens;
+    }
+
+    public Date getRegistrationCloses() {
+        return registrationCloses;
+    }
+
+    public void setRegistrationCloses(Date registrationCloses) {
+        this.registrationCloses = registrationCloses;
+    }
+
     public boolean isPriorityEvent() {
         return isPriorityEvent;
     }
@@ -88,28 +81,7 @@ public class Event extends News {
         isPriorityEvent = priorityEvent;
     }
 
-    /**
-     * A method to format how the event is shown
-     * @return a string with information about the event
-     */
-    @Override
-    public String toString() {
-        return "<h1>Titill: " + getTitle() + "</h1>" +
-                "<h4>Tag: " + getTag() + "</h4>" +
-                "<h4>Fyrirtæki: " + company + "</h4>" +
-                "<h4>Staðsetning: " + location + "</h4>" +
-                "<h4>Fjöldi: " + capacity + "</h4>" +
-                "<h4>Tími:" + timeOfEvent.getTime() + "</h4>" +
-                "<h4>Skráning hefst:" + registrationStarts.getTime() + "</h4>" +
-                "<h4>Skráningu lýkur:" + registrationEnds.getTime() + "</h4>" +
-                "<p>Meginmál: " + getText() + "</p>" +
-                "<h4>Forgangsviðburður: " + isPriorityEvent + "</h4>" +
-                "<h4>Birt: " + getDatePosted().getTime() + " - " + getAuthor() + "</h4>" +
-                "<form method=\"POST\" action=\"/registration/registration\">" +
-                    "<input type=\"text\" id=\"event\" name=\"event\" value=\"" + this.getTitle() + "\" style=\"display:none;\"/>" +
-                    "<input type=\"submit\" value=\"Skrá mig!\"></input>" +
-                "</form>";
+    public List<Registration> getRegistrations() {
+        return registrations;
     }
 }
-
-

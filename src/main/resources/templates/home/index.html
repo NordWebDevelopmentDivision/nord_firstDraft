@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+
+<html>
+
+<head th:replace="layout :: head"></head>
+<body>
+<nav th:replace="layout :: nav"></nav>
+
+<!-- Only admins are autorized to make new news items and events -->
+<div class="new-items">
+    <a sec:authorize="hasRole('ROLE_ADMIN')" href="/addNews">Búa til frétt</a>
+    <a sec:authorize="hasRole('ROLE_ADMIN')" href="/addEvent">Búa til Viðburð</a>
+</div>
+
+
+<!-- For each news item -->
+<div th:each="news : ${news}" class="news-item">
+    <div>
+        <h1 th:text="${news.title}"></h1>
+        <a th:text="${news.description}"></a>
+        <h4 th:text="${'Höfundur: ' + news.author}"></h4>
+
+        <!-- If the news item is an event -->
+        <div th:if="${news instanceof T(is.nord.model.Event)}">
+            <h4 th:text="${'Gestgjafi: ' + news.host}"></h4>
+
+            <!-- If the user is authenticated -->
+            <div th:if="${#authorization.expression('isAuthenticated()')}">
+                <!-- Print out the list of registrations for each event -->
+                <div th:each="registration : ${registrationService.findRegistrationsByEvent(news)}">
+                    <h4 th:text="${registration.user.username}"></h4>
+                </div>
+                <!-- Make conditions based on whether the authenticated user is registered for the event -->
+                <div th:switch="${registrationService.isRegisteredForEvent(news, user)}">
+                    <div th:case="${false}">
+                        <form th:action="@{/register}" method="post">
+                            <input name="eventId" type="hidden" th:value="${news.id}" />
+                            <input name="isRegistered" type="hidden" th:value="${true}" />
+                            <button type="submit">Skrá mig</button>
+                        </form>
+                    </div>
+                    <div th:case="${true}">
+                        <form th:action="@{/unregister}" method="post">
+                            <input name="newsId" type="hidden" th:value="${news.id}" />
+                            <button type="submit">Afskrá mig</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

@@ -1,33 +1,26 @@
 package is.nord.repository;
 
-import is.nord.model.News;
+import is.nord.model.Event;
 import is.nord.model.Registration;
+import is.nord.model.User;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-/* Authors:
- *      Kári Snær Kárason (ksk12@hi.is),
- */
+/*
+ * Author:
+ *       Ólafur Georg Gylfason (ogg4@hi.is)
+*/
 
 /**
- * A storage for news items
+ * An interface which queries the database for registration-related things
  */
-public interface RegistrationRepository {
-    /**
-     * Get all registration items
-     * @return a list of registration items
-     */
-    List<Registration> getAll();
+@Repository
+public interface RegistrationRepository extends CrudRepository<Registration, Long> {
+    // Fetches a single (or none) registration containing the user and the event specified
+    Registration findRegistrationByEventAndUser(Event event, User user);
 
-    /**
-     * Adds a registration item to the storage
-     * @param registration the registration item to be added to the storage
-     */
-    void add(Registration registration);
-
-    /**
-     * removes a registration item to the storage
-     * @param username the registration item to be added to the storage
-     */
-    void remove(String username, String event);
+    // Fetches all registrations for the specified event
+    List<Registration> findRegistrationsByEvent(Event event);
 }

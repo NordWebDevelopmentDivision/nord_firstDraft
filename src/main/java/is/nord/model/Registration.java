@@ -1,64 +1,57 @@
 package is.nord.model;
 
-import is.nord.controller.UserController;
-
-import java.sql.Timestamp;
+import javax.persistence.*;
+import java.util.Date;
 
 /*
-  Authors:
-    Kári Snær Kárason (ksk12@hi.is),
+ * Author:
+ *       Ólafur Georg Gylfason (ogg4@hi.is)
 */
 
-/**
- * A model for registrations to events
- */
-
+@Entity
 public class Registration {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;                    // The id of the registration
 
-    private String username; // username of the person that's logged in
-    private String event; // which event to register in
-    private Timestamp timestamp; // time of the registration
-    private boolean isPriorityRegistration; // is the event a priority event for old students or not
+    @ManyToOne
+    private Event event;                // The event registered to
 
-    public Registration(String username, String event, Timestamp timestamp, boolean isPriorityRegistration){
-        this.username = username;
-        this.event = event;
-        this.timestamp = timestamp;
-        this.isPriorityRegistration = isPriorityRegistration;
+    @ManyToOne
+    private User user;                  // The user registered
+    private Date timeOfRegistration;    // The time of the registration
+
+    public Registration(){}
+
+    public Long getId() {
+        return id;
     }
 
-    /**
-     * Makes a string representation of the registration
-     * @return a html string
-     */
-    @Override
-    public String toString() {
-        String returnString = "<h4>" + username + " " + event + " " + timestamp + " " + isPriorityRegistration +"</h4>" +
-                "<form method=\"POST\" action=\"/registration/delete\">" +
-                "<input type=\"text\" id=\"event\" name=\"event\" value=\"" + this.getEvent() + "\" style=\"display:none;\"/>" +
-                "<input type=\"text\" id=\"username\" name=\"username\" value=\"" + this.getUsername() + "\" style=\"display:none;\"/>";
-        // If the current user matches the registered user, a button for unregistering is shown
-        if(username.equals(UserController.userName)){
-            returnString += "<c:if test=\"${username == UserController.userName}\">" +
-                    "<input type=\"submit\" value=\"Skrá mig út\"></input>" +
-                    "</c:if>" +
-                    "</form>";
-        }
-        return returnString;
-    }
-    public String getUsername() {
-        return username;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getEvent() {
+    public Event getEvent() {
         return event;
     }
 
-    public Timestamp getTimestamp() {
-        return timestamp;
+    public void setEvent(Event event) {
+        this.event = event;
     }
 
-    public boolean getIsPriorityRegistration() {
-        return isPriorityRegistration;
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Date getTimeOfRegistration() {
+        return timeOfRegistration;
+    }
+
+    public void setTimeOfRegistration(Date timeOfRegistration) {
+        this.timeOfRegistration = timeOfRegistration;
     }
 }

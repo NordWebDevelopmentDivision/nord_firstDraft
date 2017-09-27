@@ -1,62 +1,76 @@
 package is.nord.controller;
 
-
+import is.nord.model.Event;
+import is.nord.model.News;
 import is.nord.model.Registration;
-import is.nord.repository.RegistrationRepository;
-import is.nord.service.NewsServiceImpl;
+import is.nord.model.User;
+import is.nord.service.NewsService;
+import is.nord.service.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.sql.Timestamp;
-
-/* Authors:
- *      Kári Snær Kárason (ksk12@hi.is),
- */
+/*
+ * Author:
+ *       Ólafur Georg Gylfason (ogg4@hi.is)
+*/
 
 /**
- * A controller that handles registrations to events
+ * A controller that controls registration-related things
  */
-
 @Controller
-@RequestMapping("/registration")
 public class RegistrationController {
+    @Autowired
+    RegistrationService registrationService;    // Establish a connection to the registrationService
 
     @Autowired
-    private RegistrationRepository registrationRepository; // Connect with the registration repository
-
-    @Autowired
-    private NewsServiceImpl newsService; // Connect with new service
+    NewsService newsService;    // Establish a connection to the newsService
 
     /**
-     * Deletes the registration from the repository
-     * @param event name of the event
-     * @param username name of user
-     * @return a website confirming delete
+     * Allows an authenticated user to register to an event
+     * @param eventId the id of the event to which the user is registering
+     * @return back to the homepage
      */
-    @RequestMapping("/delete")
-    public String deleteRegistration (String event, String username) {
-        System.out.println(username);
-        System.out.println(event);
-        registrationRepository.remove(username, event);
-        return "registration/registrationDeleted";
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public String register(@RequestParam("eventId") Long eventId) {
+        // The new registration that will be added to the database
+        Registration registration = new Registration();
+
+        // Get the event
+        Event event = (Event)newsService.findOne(eventId);
+        registration.setEvent(event);
+
+        // Get the user
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        registration.setUser(user);
+
+        // Save to database through a service
+        registrationService.save(registration);
+
+        // Redirect browser to /
+        return "redirect:/";
     }
-    /**
-     * Adds a registration for the current user and selected event
-     * @param model model of the view
-     * @param event name of event
-     * @return a website telling the user the registration was a success
-     */
-    @RequestMapping(value="/registration", method= RequestMethod.POST)
-    public String register (@RequestParam(value="event", required=false) String event, ModelMap model) {
 
-        //model.addAttribute("username", UserController.getUserName());
-        //model.addAttribute("event", event);
-        Registration registration = new Registration(UserController.userName, event, new Timestamp(newsService.getCurrentDate().getTimeInMillis()), true);
-        registrationRepository.add(registration);
-        return "/registration/registrationSuccessful";
+    /**
+     * Allows an authenticated user to unregister from an event
+     * @param newsId the id of the event from which the user is unregistering
+     * @return back to the homepage
+     */
+    @RequestMapping(value = "/unregister", method = RequestMethod.POST)
+    public String unregister(@RequestParam("newsId") Long newsId) {
+        // Get the user
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        // Get the event
+        News news = newsService.findOne(newsId);
+
+        // delete the registration for the authenticated user for this particular event
+        registrationService.delete((Event)news, user);
+
+        // Redirect browser to /
+        return "redirect:/";
     }
 }
